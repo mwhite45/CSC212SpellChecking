@@ -59,18 +59,39 @@ public class CheckSpelling {
 		// --- Load the dictionary.
 		List<String> listOfWords = loadDictionary();
 		
+		
 		// --- Create a bunch of data structures for testing:
+		long startTreeSet = System.nanoTime();
 		TreeSet<String> treeOfWords = new TreeSet<>(listOfWords);
+		long endTreeSet = System.nanoTime();
+		System.out.println("TreeSet creation completed in " + (endTreeSet-startTreeSet) + " ns.");
+		
+		long startHashSet = System.nanoTime();
 		HashSet<String> hashOfWords = new HashSet<>(listOfWords);
+		long endHashSet = System.nanoTime();
+		System.out.println("HashSet creation completed in " + (endHashSet-startHashSet) + " ns.");
+		
+		long startSortedStringListSet = System.nanoTime();
 		SortedStringListSet bsl = new SortedStringListSet(listOfWords);
+		long endSortedStringListSet = System.nanoTime();
+		System.out.println("SortedStringListSet creation completed in " + (endSortedStringListSet-startSortedStringListSet) + " ns.");
+		
+		long startCharTie = System.nanoTime();
 		CharTrie trie = new CharTrie();
 		for (String w : listOfWords) {
 			trie.insert(w);
 		}
+		long endCharTie = System.nanoTime();
+		System.out.println("CharTie creation completed in " + (endCharTie-startCharTie) + " ns.");
+		
+		long startLLHash = System.nanoTime();
 		LLHash hm100k = new LLHash(100000);
 		for (String w : listOfWords) {
 			hm100k.add(w);
 		}
+		long endLLHash = System.nanoTime();
+		System.out.println("LLHash creation completed in " + (endLLHash-startLLHash) + " ns.");
+		
 		
 		// --- Make sure that every word in the dictionary is in the dictionary:
 		//     This feels rather silly, but we're outputting timing information!
