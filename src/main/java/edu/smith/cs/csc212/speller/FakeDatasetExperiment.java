@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.Random;
 
 /**
  * Do your work for the Fake Dataset part here.
@@ -39,8 +40,43 @@ public class FakeDatasetExperiment {
 		List<String> output = new ArrayList<>(numSamples);
 		// TODO: select numSamples * fractionYes words from yesWords; create the rest as
 		// no words.
-		return output;
+		
+		//add yesWords to output
+		for (int i = 0; i < (numSamples * fractionYes); i++) {
+			Random rand = new Random();
+			int index = rand.nextInt(yesWords.size());
+			output.add(yesWords.get(index));
+		}
+		
+		//add noWords to output
+		int count = 0;
+		
+		while(count < numSamples * (1-fractionYes)) {
+			String noWord = generateNoWord();
+			if (!(yesWords.contains(noWord))) {
+				output.add(noWord);
+				count++;
+			} 
+		}
+		return output; //mix of yes and no word
+		
 	}
+	
+	public static String generateNoWord() {
+		String s = "";
+		//get a random length
+		Random randomGenerator = new Random();
+		int length = randomGenerator.nextInt(10)+1;
+		for (int i = 0; i < length; i++) {
+			int randChar = randomGenerator.nextInt(26)+97;//
+			char c = (char)randChar;
+			s = s + c;
+		}
+		return s;
+	}
+	
+	
+	
 
 	/**
 	 * This is **an** entry point of this assignment.
