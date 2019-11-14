@@ -143,13 +143,33 @@ public class CharTrie extends AbstractSet<String> {
 		 * 
 		 * @return the count of nodes that exist in the Trie, starting from here.
 		 */
-		public int countNodes() {
+		public int countNodes() { //LinkedList<Character> chars - should be passed in
+			//should return number of characters found in tree
 			int count = 1;
 			// loop over links
+			for (Node link:links) {//count for each of children
+				if (link != null) { //link(i) != null
+					count = count + link.countNodes();
+				}
+			}
 			// if they're not null
 			// count them, too
 			return count;
 		}
+	}
+	
+	public static void main(String[] args) {
+		List<String> listOfWords = new LinkedList<>();
+		listOfWords.add("hi");
+		listOfWords.add("bye");
+		listOfWords.add("hey");
+		CharTrie trie = new CharTrie();
+		for (String w : listOfWords) {
+			trie.insert(w);
+		}
+		
+		System.out.println(trie.countNodes());
+		
 	}
 
 	/**
