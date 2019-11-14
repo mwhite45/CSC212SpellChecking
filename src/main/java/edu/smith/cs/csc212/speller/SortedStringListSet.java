@@ -54,10 +54,10 @@ public class SortedStringListSet extends AbstractSet<String> {
 		// TODO: replace this with your own binary search.
 		//return Collections.binarySearch(this.data.subList(start, end), query);
 		int low = start;
-		int high = end;
+		int high = end-1;
 		int mid;
-		while (low <= high) {
-			mid = (low+high)/2;
+		while (low <= high) { 
+			mid = low + ((high-low)/2); //change to fix bug - was mid = high+low/2
 			if (query.equals(data.get(mid))) {
 				return mid;
 			} else if (query.compareTo(data.get(mid)) < 0) { //if query is less than value at mid
